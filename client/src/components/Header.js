@@ -1,5 +1,6 @@
 import React from 'react';
-import { Navbar, Button } from 'react-bootstrap';
+import { Link } from "react-router-dom";
+import { Navbar, Nav, Button } from 'react-bootstrap';
 import AuthContext from '../context/AuthContext';
 
 const Header = (props) => {
@@ -7,7 +8,11 @@ const Header = (props) => {
         {({ login, setLogin }) => (
             <Navbar bg="primary" variant="dark">
                 <Navbar.Brand href="#home">Magic Link</Navbar.Brand>
+                <Nav className="mr-auto">
+                    <Nav.Link><Link className="nav-link" to="/">Dashboard</Link></Nav.Link>
+                </Nav>
                 <Button 
+                    className="ml-auto"
                     variant="outline-light"
                     onClick={()=>setLogin(!login)}
                 >
