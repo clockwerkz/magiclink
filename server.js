@@ -1,12 +1,17 @@
 const express = require("express");
+require('dotenv').config();
+
 const cors = require("cors");
 
 const JwtStrategy = require('passport-jwt').Strategy
 const ExtractJwt = require('passport-jwt').ExtractJwt  
 const passport = require('passport');
-var bodyParser = require('body-parser')
+var bodyParser = require('body-parser');
 
-const nodemailer = require('nodemailer');
+
+
+const sgMail = require('@sendgrid/mail');
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 const db = require('./data');
 const data = require("./data");
@@ -43,29 +48,16 @@ app.use(cors({
 app.post('/email', (req, res) =>{
     let email = req.body.email;
     console.log(email);
-    let transporter = nodemailer.createTransport({
-        host: 'smtp.gmail.com',
-        port: 465,
-        secure: true,
-        auth: {
-            // should be replaced with real sender's account
-            user: 'vqmuhlrgfchueytzqy@etochq.com',
-            pass: "1234"
-        }
-    });
-    let mailOptions = {
-        // should be replaced with real recipient's account
-        to: email,
-        subject: "This is a Magic LinK!",
-        body: "This would be your magic link code."
+    
+    const msg = {
+    to: email,
+    from: 'test@vrms.io',
+    subject: 'Sending with Twilio SendGrid is Fun',
+    text: 'and easy to do anywhere, even with Node.js',
+    html: '<strong>and easy to do anywhere, even with Node.js</strong>',
     };
-    transporter.sendMail(mailOptions, (error, info) => {
-        if (error) {
-            return console.log(error);
-        }
-        console.log('Message %s sent: %s', info.messageId, info.response);
-    });
-    res.send("Email was sent!");
+    sgMail.send(msg);
+    res.send({msg: "Email was sent!"});
 
 });
 
