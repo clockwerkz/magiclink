@@ -7,7 +7,7 @@ const JwtStrategy = require('passport-jwt').Strategy
 const ExtractJwt = require('passport-jwt').ExtractJwt  
 const passport = require('passport');
 var bodyParser = require('body-parser');
-const sendAWSEmail = require('./aws/aws_ses.js');
+const {sendEmail} = require('./aws_ses.js');
 
 
 // const sgMail = require('@sendgrid/mail');
@@ -48,10 +48,9 @@ app.use(cors({
 app.post('/email', (req, res) =>{
     let email = req.body.email;
     console.log(email);
-    sendAWSEmail(process.env.TO_EMAIL,'This is a message');
+    sendEmail(process.env.TO_EMAIL,'This is a message');
     // sgMail.send(msg);
     res.send({msg: "Email was sent!"});
-
 });
 
 
