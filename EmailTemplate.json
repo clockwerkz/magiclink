@@ -1,0 +1,7 @@
+{
+    "Template": {
+    "TemplateName": "EmailTemplate",
+    "SubjectPart": "Your Invite Link from Hack for LA",
+    "HtmlPart": "<h1>Welcome to Hack for LA {{name}}! </br> </h1><p>Click the link below to finish confirm your new VRMS account: *magic link here* </p>"
+    }
+}
