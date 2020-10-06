@@ -10,7 +10,6 @@ const data = require("./data");
 const app  = express();
 const PORT = process.env.PORT || 4000;
 
-
 app.use(bodyParser.json())
 
 const userRepository = {
@@ -32,24 +31,22 @@ app.use(cors({
     origin: 'http://localhost:3000'
 }));
 
-
 //Params for Email Template
 const params = {
-    Source: process.env.FROM_EMAIL,
-    Template: "EmailTemplate",
+    "Source": process.env.FROM_EMAIL,
+    "Template": "EmailTemplate3",
     // ConfigurationSetName: "ConfigSet",
-    Destination: {
-      ToAddresses: [process.env.TO_EMAIL]
+    "Destination": {
+      "ToAddresses": [process.env.TO_EMAIL]
     },
-    TemplateData: "{ \"name\": \"Friend\"}"
-    //DefaultTemplateData: "{ \"name\":\"Friend\"}"
+    "TemplateData": "{ \"name\": \"Friend\"}"
+    // DefaultTemplateData: "{ \"name\":\"Friend\"}"
 }
 
 app.post('/email', (req, res) =>{
     let email = req.body.email;
     console.log(email);
     sendTemplateEmail(params);
-    // sgMail.send(msg);
     res.send({msg: "Email was sent!"});    
 });
 
